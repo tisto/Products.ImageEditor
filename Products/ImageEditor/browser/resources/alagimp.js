@@ -12,24 +12,26 @@ var EVENTS = {
     editor_loaded : new Event(),
     before_image_zoom_change: new Event(),
     after_image_zoom_change: new Event()
-}
+};
 
 function on(events){
     return {
         accomplish : function(fn){
-            if(typeof(events) == "string"){
+            if(typeof(events) === "string"){
                 events = [events];
             }
-            for(var i = 0; i < events.length; i++){
+            var i;
+            for(i = 0; i < events.length; i++){
                 EVENTS[events[i]].handlers.push(fn);
             }
         }
     };
-};
+}
 
 function fire(event, arg){
-    for(var i = 0; i < EVENTS[event].handlers.length; i++){
-        if(arg == undefined){
+    var i;
+    for(i = 0; i < EVENTS[event].handlers.length; i++){
+        if(arg === undefined){
             EVENTS[event].handlers[i]();
         }else{
             EVENTS[event].handlers[i](arg);
@@ -76,7 +78,7 @@ $(document).ready(function(){
 
         //remove old, add new image
         image_container.html('<img id="source-image" style="display:none" src="' + data.url + '" />');
-        image_container.children().show()
+        image_container.children().show();
 
         fire('after_image_reload', data);
     }
@@ -85,9 +87,9 @@ $(document).ready(function(){
         fire('before_action_execute', name);
         var params = {};
 
-        if(ACTION_PARAMETERS[name] == undefined){
+        if(ACTION_PARAMETERS[name] === undefined){
             $("#" + name + "-options input").each(function(){
-                if ($(this).attr('type') != "button"){
+                if ($(this).attr('type') !== "button"){
                     params[$(this).attr('name')] = $(this).attr('value');
                 }
             });
@@ -103,14 +105,14 @@ $(document).ready(function(){
             params = ACTION_PARAMETERS[name]();
         }
 
-        $("#kss-spinner").show()
+        $("#kss-spinner").show();
         $.ajax({
             url : $('base').attr('href') + '/@@execute?action_name=' + name,
             data : params,
             success: function(data, status, response){
                 data = eval('(' + data + ')');
                 reload_image(data);
-                $("#kss-spinner").hide()
+                $("#kss-spinner").hide();
             }
         });
 
@@ -156,7 +158,7 @@ $(document).ready(function(){
         var new_options = $("#" + action + "-options");
         var new_button = $(this);
 
-        if(current_button.attr('id') == new_button.attr('id')){
+        if(current_button.attr('id') === new_button.attr('id')){
             return;
         }
 
@@ -171,7 +173,7 @@ $(document).ready(function(){
                 fire('action_button_clicked', btn);
             }
 
-            if(current_options.size() == 1){
+            if(current_options.size() === 1){
                 //options already down
                 current_options.removeClass('active');
                 current_button.removeClass('active');
@@ -188,7 +190,7 @@ $(document).ready(function(){
     });
 
     var window_width, window_height;
-    if(window.innerWidth!=undefined){
+    if(window.innerWidth !== undefined){
         window_width = window.innerWidth;
         window_height = window.innerHeight;
     }else{
@@ -206,13 +208,13 @@ $(document).ready(function(){
         height:window_height - 40,
         position:[225, 10],
         close: function(event, ui){
-    		if(event.currentTarget.URL.indexOf('imageeditor.alagimp') > 0){
+            if(event.currentTarget.URL.indexOf('imageeditor.alagimp') > 0){
                 /* on alagimp view, redirect to base view after close */
                 var href = event.currentTarget.baseURI;
                 href = href.replace("/@@imageeditor.alagimp", "");
                 window.location.href = href + '/view';
-                return false
-    		}
+                return false;
+            }
             /*
             TODO : this code doesn't works : no close method on those boxes
             making page reload
@@ -253,7 +255,7 @@ $(document).ready(function(){
             fire('before_image_zoom_change', [percentage, e, ui]);
             var percentage = ui.value;
 
-            if(percentage == 100){ percentage = 1; }
+            if(percentage === 100){ percentage = 1; }
             else if(percentage > 9){ percentage = parseFloat('.' + percentage); }
             else{ percentage = parseFloat('.0' + percentage); }
 
@@ -290,7 +292,7 @@ $(document).ready(function(){
 
     on('action_button_clicked').accomplish(function(btn){
         var action_button_id = $(btn).attr('id');
-        if(action_button_id == "resize-button" || action_button_id == "crop-button"){
+        if(action_button_id === "resize-button" || action_button_id === "crop-button"){
             remove_grabber();
         }else{
             add_grabber();

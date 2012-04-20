@@ -207,14 +207,16 @@ $(document).ready(function(){
         position:[225, 10],
         close: function(event, ui){
     		if(event.currentTarget.URL.indexOf('imageeditor.alagimp') > 0){
-    			/* on alagimp view, redirect to base view after close */
-    			window.location.href = event.currentTarget.baseURI + '/view';
-    			return false
+                /* on alagimp view, redirect to base view after close */
+                var href = event.currentTarget.baseURI;
+                href = href.replace("/@@imageeditor.alagimp", "");
+                window.location.href = href + '/view';
+                return false
     		}
-    		/*
-    		TODO : this code doesn't works : no close method on those boxes
-    		making page reload
-    		*/
+            /*
+            TODO : this code doesn't works : no close method on those boxes
+            making page reload
+            */
             $("#image-editor-controls").close();
             $("#zoom-slider-wrapper").close();
             alert('hi');

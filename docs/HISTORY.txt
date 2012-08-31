@@ -16,6 +16,10 @@ Unreleased
 * Fix js redirect after image editing for Diazo-based themes.
   [timo]
 
+* Fix jqueryui.css resource link to work with the latest versions of
+  collective.js.jqueryui (>1.8.13.1).
+  [timo]
+
 
 2.1b2 (2011-12-06)
 ------------------

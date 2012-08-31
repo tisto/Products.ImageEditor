@@ -33,7 +33,7 @@ setup(name='Products.ImageEditor',
       zip_safe=False,
       install_requires=[
         'setuptools',
-        'collective.js.jqueryui>=1.8.9.2',
+        'collective.js.jqueryui>=1.8.13.1',
       ],
       extras_require={'test': [
         'collective.testcaselayer',
